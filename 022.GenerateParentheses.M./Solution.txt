@@ -1,0 +1,32 @@
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Arrays;
+
+public class Solution {
+  public List<String> generateParenthesis(int n) {
+    if (n == 0) {
+      return Arrays.asList("");
+    }
+
+    if (n == 1) {
+      return Arrays.asList("()");
+    }
+
+    List<String> prev = generateParenthesis(n - 1);
+    List<String> result = new LinkedList<String>();
+    for (int i = 0; i < prev.size(); i += 1) {
+      result.add("()" + prev.get(i));
+      result.add("(" + prev.get(i) + ")");
+      if (i != 0) {
+        result.add(prev.get(i) + "()");
+      }
+    }
+
+    return result;
+  }
+
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.generateParenthesis(4));
+  }
+}
