@@ -5,6 +5,47 @@ import java.util.HashMap;
 import java.util.Arrays;
 
 public class Solution {
+  public List<String> letterCombinations(String digits) {
+    char[][] map = new char[][] {
+      {}, {},
+      {'a', 'b', 'c'},
+      {'d', 'e', 'f'},
+      {'g', 'h', 'i'},
+      {'j', 'k', 'l'},
+      {'m', 'n', 'o'},
+      {'p', 'q', 'r', 's'},
+      {'t', 'u', 'v'},
+      {'w', 'x', 'y', 'z'}
+    };
+
+    char[] dc = digits.toCharArray();
+    List<String> result = new ArrayList<String>();
+
+    for (int k = 0; k < dc.length; k += 1) {
+      char d = dc[k];
+      char[] chars = map[Character.getNumericValue(d)];
+
+      int size = result.size();
+      for (int i = 0; i < chars.length; i += 1) {
+        if (k == 0) {
+          result.add(chars[i] + "");
+        } else {
+          for (int j = 0; j < size; j += 1) {
+            if (i == 0) {
+              result.set(j, result.get(j) + chars[i]);
+            } else {
+              String s = result.get(j);
+              s = s.substring(0, s.length() - 1);
+              result.add(s + chars[i]);
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
   /*
   USE A QUEUE! (FIFO)
   start with empty queue,
@@ -15,7 +56,7 @@ public class Solution {
   trick is, while(queue.peek().length() == i)
   ...
   */
-
+  /*
   public List<String> letterCombinations(String digits) {
     if (digits == null || digits.length() == 0) {
       return Arrays.asList();
@@ -59,6 +100,7 @@ public class Solution {
 
     return res;
   }
+  */
 
   // adf
   // adg

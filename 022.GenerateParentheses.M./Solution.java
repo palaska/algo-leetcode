@@ -1,7 +1,40 @@
 import java.util.Queue;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Arrays;
+
+public class Solution {
+  public List<String> generateParenthesis(int n) {
+    if (n == 0) {
+      return Arrays.asList();
+    }
+
+    List<String> init = new ArrayList<>();
+    backtrack(init, "", 0, 0, n);
+    return list;
+  }
+
+  private void backtrack(List<String> list, String str, int open, int close, int max) {
+    if (str.length() == max * 2) {
+      list.add(str);
+      return;
+    }
+
+    if (open < max) {
+      backtrack(list, str + "(", open + 1, close, max);
+    }
+
+    if (close < open) {
+      backtrack(list, str + ")", open, close + 1, max);
+    }
+  }
+
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.generateParenthesis(2));
+  }
+}
 
 /*
 VERY GOOD SOLUTION
@@ -24,7 +57,7 @@ public List<String> generateParenthesis(int n) {
          backtrack(list, str+")", open, close+1, max);
  }
  */
-
+/*
 public class Solution {
   public class Node {
     int val;
@@ -77,3 +110,4 @@ public class Solution {
     System.out.println(s.generateParenthesis(4));
   }
 }
+*/

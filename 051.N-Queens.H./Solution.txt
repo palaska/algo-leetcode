@@ -1,0 +1,54 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Solution {
+  public List<List<String>> solveNQueens(int n) {
+    List<List<String>> solutions = new ArrayList<List<String>>();
+    backtrack(solutions, new ArrayList<>(), 0, n, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    return solutions;
+  }
+
+  public void backtrack(List<List<String>> solutions, ArrayList<String> currentBoard, int qCnt, int max, ArrayList<Integer> seenIndices, ArrayList<Integer> slopeMinusOneLine, ArrayList<Integer> slopePlusOneLine) {
+    if (qCnt == max) {
+      solutions.add(currentBoard);
+      return;
+    }
+
+    int yIndex = qCnt + 1;
+
+    for (int i = 0; i < max; i += 1) {
+      int nix = i + yIndex;
+      int pix = i - yIndex;
+
+      if (!seenIndices.contains(i) && !slopeMinusOneLine.contains(nix) && !slopePlusOneLine.contains(pix)) {
+        StringBuilder str = new StringBuilder();
+
+        for (int j = 0; j < max; j += 1) {
+          if (i == j) {
+            str.append("Q");
+          } else {
+            str.append(".");
+          }
+        }
+
+        currentBoard.add(str.toString());
+        seenIndices.add(i);
+        slopeMinusOneLine.add(nix);
+        slopePlusOneLine.add(pix);
+
+        backtrack(solutions, currentBoard, yIndex, max, seenIndices, slopeMinusOneLine, slopePlusOneLine);
+
+        currentBoard.remove(currentBoard.size() - 1);
+        seenIndices.remove(seenIndices.size() - 1);
+        slopeMinusOneLine.remove(slopeMinusOneLine.size() - 1);
+        slopePlusOneLine.remove(slopePlusOneLine.size() - 1);
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.solveNQueens(5));
+  }
+}
